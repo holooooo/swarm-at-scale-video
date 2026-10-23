@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1015">
+<title>EP 01 · Boids 群集 / 自由互动实验场</title>
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="stylesheet" href="../interactive/interactive.css">
+<script type="importmap">{"imports":{"three":"../lib/three.module.js","three/addons/":"../lib/jsm/"}}</script>
+</head>
+<body data-episode="01">
+<header><a class="brand" href="../index.html">SWARM / INTERACTIVE LAB</a><nav aria-label="各期互动场景"><a class="home" href="../index.html">返回系列</a><a class="current" href="../ep01-boids/interactive.html" aria-label="第01期 Boids 群集">01</a><a class="" href="../ep02-abzu/interactive.html" aria-label="第02期 深海鱼群">02</a><a class="" href="../ep03-ecs/interactive.html" aria-label="第03期 ECS 尸潮">03</a><a class="" href="../ep04-dyson/interactive.html" aria-label="第04期 戴森帆群">04</a><a class="" href="../ep05-sword/interactive.html" aria-label="第05期 御剑剑阵">05</a></nav></header>
+<main>
+<section class="viewport" aria-label="三维模拟视口">
+<canvas id="scene" tabindex="0" aria-label="Boids 群集，拖动旋转，滚轮缩放，Shift 拖动平移；方向键旋转，加减号缩放，空格暂停"></canvas>
+<div class="viewport-caption"><div class="eyebrow">EP 01 / LIVE SIMULATION</div><h1 id="title">Boids 群集</h1><div class="status" id="state" role="status" aria-live="polite">加载本地场景…</div></div>
+<div class="message" id="message" role="status">正在初始化 WebGL2…</div><div class="meter" id="metrics">本地实时求解 / 无视频播放</div>
+</section>
+<aside class="controls" aria-label="模拟控制">
+<h2>自由观察实验场</h2><p id="description">原始模拟与真实场景。无自动镜头，无影片时间线。</p>
+<div class="control-grid"><label class="field" for="stage">场景 / 阶段<select id="stage" aria-label="场景或阶段"></select></label><label class="field" for="view">相机预设<select id="view" aria-label="相机预设"></select></label></div>
+<div class="actions"><button id="pause" class="primary" type="button" aria-pressed="false">暂停模拟</button><button id="reset" type="button">重置阶段</button><button id="step" type="button">单步推进</button></div>
+<button id="home-view" type="button">恢复场景视角</button>
+<div id="parameters" aria-label="模拟参数"></div>
+<details><summary>如何探索</summary><p>鼠标拖动旋转，滚轮缩放；右键或 Shift 拖动平移。触屏单指旋转、双指捏合缩放与平移。</p><p>暂停只冻结模拟，相机仍可自由观察。聚焦画面后可用方向键旋转、加减号缩放、空格暂停。重置会保留参数并回到所选阶段起点。</p><p>阶段切换仅准备该段初态，不会自动跳转到下一段。后台标签自动暂停；弱设备会降低实例数与像素比。</p></details>
+<div class="quality" id="quality"></div><button class="reload" id="reload" type="button">资源或 WebGL 异常？重新载入</button><footer>LOCAL MODULES · ORIGINAL SIMULATION</footer>
+</aside>
+</main><noscript><p class="noscript">此互动实验场需要启用 JavaScript 与 WebGL2。请通过本地 HTTP 服务打开。</p></noscript>
+<script type="module" src="../interactive/app.js"></script>
+</body></html>

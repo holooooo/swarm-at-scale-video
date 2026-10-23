@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.playwright-cli/
+.wrangler/
+output/
+dist/
+site-preview/
+build/
+sources/raw/
+out/*.mp4
+out/*.wav
+.env
+.env.*
+!.env.example
+*.log

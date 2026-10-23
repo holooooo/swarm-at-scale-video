@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../core/film.css">
+<script type="importmap">{ "imports": { "three": "../lib/three.module.js" } }</script></head>
+<body class="render"><div id="stage"><canvas id="gl" width="1920" height="1080"></canvas></div>
+<script type="module">
+import * as THREE from 'three';
+import { SYS, spaceUniforms, makeStar, makePlanet, makePanels, makeSwarm, makeShell, planetRotJS } from './sims/space.js';
+try {
+  const r = new THREE.WebGLRenderer({ canvas: document.querySelector('#gl'), antialias: true, preserveDrawingBuffer: true });
+  r.setPixelRatio(1); r.setSize(1920, 1080, false);
+  const u = spaceUniforms(), scene = new THREE.Scene();
+  scene.add(makeStar(u), makePlanet(u), makePanels(u, 131072), makeSwarm(u), makeShell(u));
+  const cam = new THREE.PerspectiveCamera(40, 16 / 9, 0.05, 20000);
+  const L = new URLSearchParams(location.search).get('lab') || 'wide';
+  const pd = makePanels(u, 131072).userData.data; let LON = 0; { let bi = 0, bd = 1e9; for (let i = 0; i < pd.length / 4; i++) { const d = Math.abs(pd[i*4+1] - Math.sin(0.32)); if (d < bd) { bd = d; bi = i; } } LON = Math.atan2(pd[bi*4+2], pd[bi*4]); }
+  window.DURATION = 10;
+  window.renderFrame = async t => {
+    u.uTime.value = t; u.uSpin.value = +(new URLSearchParams(location.search).get('spin') || 1.2) + t * 0.1; u.uOrbitT.value = t * 30;
+    if (L === 'wide') { cam.position.set(260, 160, 700); cam.lookAt(200, 0, -40); }
+    else if (L === 'planet') { cam.position.copy(SYS.planetPos).add(new THREE.Vector3(-90, 40, 110)); cam.lookAt(SYS.planetPos); }
+    else { // ground close-up near the terminator
+      const R = planetRotJS(u.uSpin.value); const d = new THREE.Vector3(Math.cos(0.32) * Math.cos(LON), Math.sin(0.32), Math.cos(0.32) * Math.sin(LON)).applyMatrix3(R);
+      const base = SYS.planetPos.clone().addScaledVector(d, SYS.planetR), east = new THREE.Vector3(0, 1, 0).applyMatrix3(R).cross(d).normalize();
+      cam.up.copy(d); cam.position.copy(base).addScaledVector(d, 0.9).addScaledVector(east, 2.2); cam.lookAt(base.clone().addScaledVector(east, -2).addScaledVector(d, 0.1));
+    }
+    r.render(scene, cam); return true;
+  };
+  window.READY = true;
+} catch (e) { window.ERR = e.message + e.stack; window.READY = true; }
+</script></body></html>

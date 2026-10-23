@@ -1,0 +1,1 @@
+{"vortex":{"t":40,"msPerStep":7.17,"checksPerStep":375164,"active":10000},"battle":{"t":100,"msPerStep":2.76,"checksPerStep":11,"active":15990},"river":{"t":139,"msPerStep":7.78,"checksPerStep":986924,"active":11233},"recall":{"t":150,"msPerStep":7.1,"checksPerStep":516282,"active":10000},"naivePairs":127992000,"total":41.6,"cpu":"Apple M3 Max","node":"v24.21.0"}

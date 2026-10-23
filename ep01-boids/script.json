@@ -1,0 +1,197 @@
+[
+ {
+  "id": "intro",
+  "lines": [
+   [
+    "一只椋鸟，看不见整个鸟群，|它只盯着身边的六七只同伴。",
+    "A single starling can't see the flock.|It only watches the six or seven birds beside it."
+   ],
+   [
+    "可几十万只这样的鸟聚在一起，|就能在天上画出这样的形状。",
+    "Yet put a few hundred thousand of them together,|and they paint shapes like this across the sky."
+   ],
+   [
+    "没有领头鸟，也没有指挥。|1986 年，有人只用三条规则，|就在电脑里复现了这一幕。",
+    "No leader, no conductor.|In 1986, someone used just three rules|to recreate it on a computer."
+   ],
+   [
+    "这一期，我们从一只鸟出发，一路演进到六万只。",
+    "This episode, we start from one bird and evolve all the way to sixty thousand."
+   ]
+  ]
+ },
+ {
+  "id": "rules",
+  "lines": [
+   [
+    "他叫克雷格·雷诺兹，|他把模拟出来的鸟叫作 Boids，“类鸟体”。",
+    "His name is Craig Reynolds.|He called his simulated birds boids: bird-oid objects."
+   ],
+   [
+    "每只 boid 只感知身边一小圈邻居，|只做三件事：",
+    "Each boid senses only the neighbors in a small radius,|and does just three things:"
+   ],
+   [
+    "分离，离得太近就躲开；",
+    "separation: steer away when someone gets too close;"
+   ],
+   [
+    "对齐，方向跟邻居保持一致；",
+    "alignment: match your neighbors' heading;"
+   ],
+   [
+    "聚合，朝邻居的中心靠拢。",
+    "cohesion: move toward their center."
+   ],
+   [
+    "三股力相加，就是这一帧的转向。|没有全局规划，鸟群自己出现了。",
+    "Add the three forces, and that's this frame's steering.|No global plan, yet the flock simply emerges."
+   ],
+   [
+    "1992 年，它登上了《蝙蝠侠归来》，|生成了成群的蝙蝠和企鹅大军。",
+    "In 1992 it reached Batman Returns,|driving swarms of bats and an army of penguins."
+   ]
+  ]
+ },
+ {
+  "id": "steer",
+  "lines": [
+   [
+    "1999 年的 GDC 上，|雷诺兹把它扩展成一整套转向行为：|寻找、逃离、徘徊、避障。",
+    "At GDC 1999,|Reynolds expanded it into a whole toolkit of steering behaviors:|seek, flee, wander, avoid."
+   ],
+   [
+    "核心只有一行：期望速度，减去当前速度。",
+    "The core is a single line: desired velocity minus current velocity."
+   ],
+   [
+    "放进一只鹰，每只鸟多一条“逃离”，|鸟群就会被撕开，再重新合拢。",
+    "Drop in a hawk and give each bird one extra flee rule,|and the flock tears open, then closes again."
+   ],
+   [
+    "《半条命》里的异星飞鸟，|名字就直接叫 Boid。",
+    "In Half-Life, the alien flyers of Xen|are literally named Boid."
+   ]
+  ]
+ },
+ {
+  "id": "scale",
+  "lines": [
+   [
+    "但这里藏着一个规模问题：|每只鸟都得先找出，谁是它的邻居。",
+    "But a scaling problem hides here:|every bird first has to find out who its neighbors are."
+   ],
+   [
+    "和所有鸟逐一比距离，|一千只鸟，每帧就是一百万次；|数量翻十倍，开销翻一百倍。",
+    "Compare against every other bird,|and a thousand birds cost a million checks per frame;|ten times the birds, a hundred times the cost."
+   ],
+   [
+    "解法是空间网格：每只鸟只查自己和相邻的格子，|开销从 n 的平方，降到接近 n。",
+    "The fix is a spatial grid: each bird checks only its own cell and the cells next to it,|and the cost drops from n squared to roughly n."
+   ],
+   [
+    "2006 年，雷诺兹靠它在 PS3 上，|跑起了一万五千个个体，每秒六十帧。",
+    "In 2006, Reynolds used it to run|fifteen thousand agents on a PS3 at sixty frames per second."
+   ]
+  ]
+ },
+ {
+  "id": "topo",
+  "lines": [
+   [
+    "那真实的椋鸟看多远？|2008 年，STARFLAG 团队|重建了鸟群里每只鸟的三维位置。",
+    "So how far does a real starling look?|In 2008, the STARFLAG team|rebuilt the 3D position of every bird in a flock."
+   ],
+   [
+    "答案是：不按距离，|只看最近的六七只，不管它们离得多远。",
+    "The answer: not by distance.|Each bird tracks its six or seven nearest, however far away."
+   ],
+   [
+    "这叫拓扑邻居。|论文的模拟显示：密度剧变时，|这样的鸟群更不容易散。",
+    "These are topological neighbors.|The paper's simulations show that when density swings,|such flocks are harder to break apart."
+   ]
+  ]
+ },
+ {
+  "id": "gpu",
+  "lines": [
+   [
+    "再往上，就得交给 GPU：|每只鸟的位置和速度，存成浮点纹理里的一个像素。",
+    "Beyond that, hand it to the GPU:|each bird's position and velocity is one pixel of a float texture."
+   ],
+   [
+    "邻居也不再一个个去数，|先把所有鸟累加进一张网格，|记下每格的数量、中心和平均速度。",
+    "Neighbors are no longer counted one by one;|every bird is splatted into a grid|that keeps each cell's count, center and average velocity."
+   ],
+   [
+    "每只鸟只读周围的格子，|三条规则，就变成了对一张场的采样。",
+    "Each bird reads only the cells around it,|and the three rules become samples of a field."
+   ],
+   [
+    "六万五千五百三十六只，|每一只都在实时做着同样的三件事。",
+    "Sixty-five thousand five hundred thirty-six birds,|each doing the same three things, in real time."
+   ]
+  ]
+ },
+ {
+  "id": "bridge",
+  "lines": [
+   [
+    "从三条规则到六万只，规则几乎没变，|变的是我们怎么组织数据。",
+    "From three rules to sixty thousand birds, the rules barely changed.|What changed is how we organize the data."
+   ],
+   [
+    "可如果每一只不再是一个点，|而是一条有骨骼、会摆尾的鱼呢？",
+    "But what if each one isn't a point anymore,|but a fish with a skeleton and a swinging tail?"
+   ]
+  ]
+ },
+ {
+  "id": "gdc",
+  "clip": {
+   "src": "sources/raw/gdc_abzu_raw.mp4",
+   "in": 221.85,
+   "out": 232.65
+  },
+  "credit": "GDC 2017 · Matt Nava · Creating the Art of ABZÛ",
+  "lines": [
+   [
+    "每条鱼大概有 60 到 100 个关节",
+    "there's like 60 to 100 joints",
+    0.0,
+    2.2
+   ],
+   [
+    "每一帧，你都得把每条鱼的关节全部更新一遍",
+    "and every frame you have to update all of those joints per fish",
+    2.2,
+    4.75
+   ],
+   [
+    "所以要更新的不只是一万条鱼",
+    "so instead of just having 10,000 fish to update",
+    4.75,
+    7.75
+   ],
+   [
+    "而是一万乘以一百个关节，这太疯狂了",
+    "you have ten thousand times 100 joints, which is crazy",
+    7.75,
+    10.8
+   ]
+  ]
+ },
+ {
+  "id": "final",
+  "lines": [
+   [
+    "下一期，我们潜进《ABZÛ》的海底，|看上万条鱼怎么游出生命感。",
+    "Next time, we dive into the sea of ABZÛ|to see how ten thousand fish come alive."
+   ],
+   [
+    "而这一切，还得从一只鸟说起。",
+    "And all of it starts, once again, with a single bird."
+   ]
+  ]
+ }
+]

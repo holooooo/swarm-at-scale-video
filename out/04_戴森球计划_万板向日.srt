@@ -1,0 +1,234 @@
+1
+00:00:00,900 --> 00:00:03,999
+一块太阳能板，只需要做一件事
+A solar panel has only one job:
+
+2
+00:00:03,999 --> 00:00:06,916
+一整天都转过去，正对着太阳
+turn all day long to face the sun.
+
+3
+00:00:07,976 --> 00:00:09,980
+可在《戴森球计划》里
+But in Dyson Sphere Program,
+
+4
+00:00:09,980 --> 00:00:12,446
+一颗星球上铺满了成千上万块
+a single planet is paved with thousands of them,
+
+5
+00:00:12,446 --> 00:00:15,067
+恒星周围还飞着几十万张太阳帆
+and hundreds of thousands of sails circle the star.
+
+6
+00:00:15,927 --> 00:00:18,401
+每一块都在转。这么多东西
+Every one of them is turning.
+
+7
+00:00:18,401 --> 00:00:20,710
+游戏到底每一帧要算多少？
+How much does the game have to compute each frame?
+
+8
+00:00:22,210 --> 00:00:26,636
+这一期，我们看怎么让一百万个东西，一起追着太阳转
+This episode: how to make a million things track the sun at once.
+
+9
+00:00:28,936 --> 00:00:32,892
+最直接的写法：每块板每帧在 CPU 上
+The direct way: every panel, every frame, on the CPU:
+
+10
+00:00:32,892 --> 00:00:36,668
+先找到太阳，转动底座，再把面板仰起来
+find the sun, turn the base, tilt the face up,
+
+11
+00:00:36,668 --> 00:00:40,084
+算出一个 4×4 矩阵，传给显卡
+build a 4×4 matrix and hand it to the GPU.
+
+12
+00:00:40,644 --> 00:00:42,729
+我在这台电脑上测了一下
+I measured it on this machine:
+
+13
+00:00:42,729 --> 00:00:45,858
+一百万块板，光算矩阵就要 46 毫秒
+for a million panels the matrices alone take 46 milliseconds,
+
+14
+00:00:45,858 --> 00:00:48,539
+每帧还得上传 61 MB 数据
+and 61 megabytes have to be uploaded every frame.
+
+15
+00:00:49,199 --> 00:00:52,953
+可这些板的变化，其实全都能从太阳位置推出来
+Yet everything about how these panels change follows from where the sun is.
+
+16
+00:00:54,453 --> 00:00:57,539
+那就把这段数学，搬进顶点着色器
+So move that math into the vertex shader.
+
+17
+00:00:58,099 --> 00:01:01,666
+每块板只存一次：它在星球上的方向
+Each panel is stored once: its direction on the
+
+18
+00:01:01,666 --> 00:01:04,585
+加一个随机数，16 个字节
+planet plus a random number, sixteen bytes,
+
+19
+00:01:04,585 --> 00:01:07,336
+开局上传，之后再也不动
+uploaded at the start and never touched again.
+
+20
+00:01:07,996 --> 00:01:13,985
+每一帧，CPU 只发两个数：星球转到了哪，太阳在哪
+Each frame, the CPU sends just two values: how far the planet has turned, and where the sun is.
+
+21
+00:01:13,985 --> 00:01:17,621
+顶点着色器自己转底座、仰面板
+The vertex shader turns the base and tilts the face on its own.
+
+22
+00:01:18,281 --> 00:01:21,552
+转到夜晚的一侧，太阳落下地平线
+On the night side, once the sun sets below the horizon,
+
+23
+00:01:21,552 --> 00:01:24,641
+板子就平放下来，等下一次日出
+the panels lie flat and wait for the next sunrise.
+
+24
+00:01:26,741 --> 00:01:29,863
+太空里的太阳帆更极端：几十万张
+Out in space, the solar sails go further: hundreds of thousands,
+
+25
+00:01:29,863 --> 00:01:31,978
+每一张都在绕着恒星转
+each orbiting the star.
+
+26
+00:01:32,538 --> 00:01:35,002
+它们甚至什么都不用存
+They don't need to store anything at all.
+
+27
+00:01:35,002 --> 00:01:39,739
+只用编号算出哈希，就能定出轨道、半径和起始角
+A hash of each sail's index fixes its orbit, radius and starting angle,
+
+28
+00:01:39,739 --> 00:01:43,340
+再按开普勒定律，越靠里的转得越快
+and by Kepler's law, inner orbits run faster.
+
+29
+00:01:44,000 --> 00:01:46,467
+位置就是编号和时间的函数
+Position is just a function of index and time.
+
+30
+00:01:46,467 --> 00:01:50,907
+这里的一百零四万八千五百七十六张帆，只用一次绘制
+These one million forty-eight thousand five hundred seventy-six sails take a single draw call.
+
+31
+00:01:51,567 --> 00:01:53,802
+据社区 Mod 作者的分析
+According to a community mod author's analysis,
+
+32
+00:01:53,802 --> 00:01:56,595
+《戴森球计划》也是用一次程序化绘制
+Dyson Sphere Program also draws all the distant sails
+
+33
+00:01:56,595 --> 00:01:58,411
+画出所有远处的太阳帆
+with one procedural draw call.
+
+34
+00:02:00,511 --> 00:02:02,384
+戴森壳的六边形也是一样
+The hexagons of the Dyson shell work the same way.
+
+35
+00:02:02,384 --> 00:02:06,129
+社区 Mod SphereOpt 把它们改成实例化
+The community mod SphereOpt switched them to instancing:
+
+36
+00:02:06,129 --> 00:02:08,536
+每层一次绘制，而不是每块壳一次
+one draw call per layer instead of one per shell.
+
+37
+00:02:09,196 --> 00:02:11,757
+在一颗有 5240 块壳的戴森球上
+On a sphere with 5,240 shells,
+
+38
+00:02:11,757 --> 00:02:14,703
+作者测到帧率从 18 提到了 85 左右
+its author measured the frame rate going from 18 to about 85.
+
+39
+00:02:16,403 --> 00:02:18,849
+还有一招是不画、少画
+Another move is to draw less, or nothing.
+
+40
+00:02:18,849 --> 00:02:22,424
+离得近的太阳帆，游戏画成实心模型
+Sails up close are drawn as solid meshes;
+
+41
+00:02:22,424 --> 00:02:25,247
+远处的，只是一张平面贴片
+far away, they're just flat sprites.
+
+42
+00:02:25,907 --> 00:02:30,403
+SphereOpt 也给框架和节点加了细节层级和视锥剔除
+SphereOpt also added level of detail and frustum culling for frames and nodes:
+
+43
+00:02:30,403 --> 00:02:33,158
+戴森球不在画面里时，帧率大幅上升
+when the sphere is out of view, the frame rate jumps.
+
+44
+00:02:34,658 --> 00:02:37,712
+四期下来，招式其实只有几种
+Four episodes in, there are really only a few moves:
+
+45
+00:02:37,712 --> 00:02:41,530
+局部规则、空间网格、数据和逻辑分开
+local rules, a spatial grid, data kept apart from logic,
+
+46
+00:02:41,530 --> 00:02:44,394
+再把能算的都交给 GPU
+and everything computable handed to the GPU.
+
+47
+00:02:45,054 --> 00:02:47,377
+下一期，我们把它们合在一起
+Next time, we put them all together.

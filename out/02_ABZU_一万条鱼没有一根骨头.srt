@@ -1,0 +1,284 @@
+1
+00:00:00,900 --> 00:00:04,257
+给一条鱼做动画，最经典的办法是骨骼
+The classic way to animate a fish is a skeleton:
+
+2
+00:00:04,257 --> 00:00:07,613
+六十到一百个关节，想怎么动就怎么动
+sixty to a hundred joints, and it can do anything you like.
+
+3
+00:00:08,373 --> 00:00:10,922
+可《ABZÛ》要的，是这样的画面
+But ABZÛ wanted something like this.
+
+4
+00:00:11,822 --> 00:00:17,122
+你看角落这里，我想大概有一万一千条鱼
+you can see in the corner there, I think it's about 11,000 fish or something.
+
+5
+00:00:17,222 --> 00:00:18,822
+这些是巨大的鲹鱼
+These are giant trevallies,
+
+6
+00:00:18,822 --> 00:00:25,022
+它们同时在游，每一条的节奏都不一样
+and they all are swimming with a unique timing of their swim cycle at the same time.
+
+7
+00:00:25,322 --> 00:00:28,222
+我们试过用带骨骼的鱼来做这个场景
+when we tried to do this scene with skeleton fish,
+
+8
+00:00:28,222 --> 00:00:32,622
+屏幕上大概只能放 30 条鱼
+we only could get like 30 fish on the screen.
+
+9
+00:00:32,622 --> 00:00:34,822
+所以差别非常大
+So it's a huge difference.
+
+10
+00:00:35,322 --> 00:00:37,455
+三十条，到一万一千条
+Thirty fish, versus eleven thousand.
+
+11
+00:00:37,455 --> 00:00:40,572
+这一期，我们拆开《ABZÛ》的鱼
+This episode, we take ABZÛ's fish apart.
+
+12
+00:00:42,872 --> 00:00:44,629
+骨骼动画贵在哪？
+Why are skeletons expensive?
+
+13
+00:00:44,629 --> 00:00:47,793
+每一帧，每个关节都要算一次变换
+Every frame, every joint needs its transform computed,
+
+14
+00:00:47,793 --> 00:00:50,780
+再把每个顶点按权重蒙到骨头上
+and every vertex is skinned to its bones by weight.
+
+15
+00:00:51,340 --> 00:00:54,914
+一万条鱼乘一百个关节，就是一百万个关节
+Ten thousand fish times a hundred joints is a million joints,
+
+16
+00:00:54,914 --> 00:00:56,863
+每秒还要再算六十遍
+sixty times a second.
+
+17
+00:00:57,423 --> 00:00:59,270
+所以他们干脆把骨骼拿掉了
+So they took the skeletons away.
+
+18
+00:01:00,470 --> 00:01:02,787
+所有鱼共用一个静态网格
+Every fish shares one static mesh,
+
+19
+00:01:02,787 --> 00:01:05,434
+用实例化一次画出成千上万份
+drawn thousands of times in a single instanced call.
+
+20
+00:01:05,694 --> 00:01:07,912
+这项技术原本多用来画草地
+The technique is usually used for grass;
+
+21
+00:01:07,912 --> 00:01:09,982
+每个实例只带一小份数据
+each instance carries only a tiny bit of data.
+
+22
+00:01:10,242 --> 00:01:14,397
+在这期的演示里，每条鱼只有三十二个字节
+In this demo, each fish is just thirty-two bytes:
+
+23
+00:01:14,397 --> 00:01:17,041
+位置、相位、速度和转向
+position, phase, velocity and turn rate.
+
+24
+00:01:18,341 --> 00:01:20,485
+没有骨骼，鱼怎么动？
+Without bones, how does a fish move?
+
+25
+00:01:20,485 --> 00:01:23,165
+答案是在材质里直接挪顶点
+By moving its vertices right in the material.
+
+26
+00:01:23,725 --> 00:01:26,492
+第一层，整条鱼左右平移
+Layer one: the whole fish slides side to side.
+
+27
+00:01:26,492 --> 00:01:29,062
+第二层，绕中心点偏航
+Layer two: it yaws around its center.
+
+28
+00:01:29,822 --> 00:01:33,454
+第三层，一道正弦波沿着脊椎传向尾巴
+Layer three: a sine wave travels down the spine to the tail.
+
+29
+00:01:33,454 --> 00:01:35,996
+第四层，身体沿脊椎扭转
+Layer four: the body twists along the spine.
+
+30
+00:01:36,756 --> 00:01:40,033
+再加一张蒙板，只让后半身摆动
+Add a mask so only the back half swings,
+
+31
+00:01:40,033 --> 00:01:44,082
+一条会游的鱼就出来了，一根骨头都没用
+and you have a swimming fish without a single bone.
+
+32
+00:01:45,582 --> 00:01:48,294
+四层动作都由同一个相位驱动
+All four layers run off a single phase.
+
+33
+00:01:48,294 --> 00:01:52,023
+每条鱼起始相位不同，鱼群就不会整齐划一
+Give every fish its own starting phase, and the school stops marching in lockstep.
+
+34
+00:01:52,683 --> 00:01:54,980
+相位的快慢跟着游速走
+The phase speeds up with swim speed:
+
+35
+00:01:54,980 --> 00:01:58,336
+加速时尾巴摆得又快又猛，然后滑行
+when a fish accelerates its tail beats hard, then it coasts.
+
+36
+00:01:59,636 --> 00:02:01,800
+咬合很难用正弦波做出来
+A bite is hard to make out of sine waves,
+
+37
+00:02:01,800 --> 00:02:03,810
+于是他们改用混合变形
+so they switched to blendshapes:
+
+38
+00:02:04,270 --> 00:02:08,104
+先张嘴，再把头往前送，同时合上嘴
+open the mouth, then thrust the head forward while it snaps shut.
+
+39
+00:02:08,864 --> 00:02:11,515
+螃蟹的腿也是四个混合姿态
+A crab's legs are four blended poses too;
+
+40
+00:02:11,515 --> 00:02:15,049
+要用骨骼，一只螃蟹就得四十一个关节
+with a skeleton, one crab would need forty-one joints.
+
+41
+00:02:16,349 --> 00:02:18,562
+鱼越长，问题越明显
+The longer the fish, the worse it looks:
+
+42
+00:02:18,562 --> 00:02:21,697
+鲨鱼急转弯时，像一块木板在转
+a shark in a hard turn rotates like a plank.
+
+43
+00:02:22,257 --> 00:02:24,654
+他们给鲨鱼做了四个卷曲姿态
+They gave the shark four curl poses,
+
+44
+00:02:24,654 --> 00:02:27,201
+按转弯的方向和力度在中间插值
+blended by the direction and strength of the turn.
+
+45
+00:02:27,761 --> 00:02:29,747
+可混合变形是叠加的
+But blendshapes add up:
+
+46
+00:02:29,747 --> 00:02:33,057
+向左和向上同时卷，尾巴就被拉得太远
+curl left and up at once, and the tail is pulled much too far.
+
+47
+00:02:33,717 --> 00:02:37,500
+最后只好再加一个专门的斜向姿态，把尾巴拉回来
+So they added one more pose just for the diagonal, to pull the tail back.
+
+48
+00:02:38,800 --> 00:02:42,688
+至于每条鱼往哪儿游，就交给上一期的群体规则
+Where each fish swims comes from last episode's flocking rules:
+
+49
+00:02:42,688 --> 00:02:46,414
+位置和速度存在纹理里，在 GPU 上更新
+positions and velocities live in textures and update on the GPU.
+
+50
+00:02:47,074 --> 00:02:51,176
+七种鱼，七次绘制调用，一万零二百四十条鱼
+Seven species, seven draw calls, ten thousand two hundred forty fish,
+
+51
+00:02:51,176 --> 00:02:53,851
+每一条都按自己的节奏在游
+each swimming to its own rhythm.
+
+52
+00:02:56,151 --> 00:02:58,222
+每条鱼，就是一小份数据
+Every fish is a tiny bit of data,
+
+53
+00:02:58,222 --> 00:03:00,441
+加上一段所有鱼共用的代码
+plus one piece of code that all fish share.
+
+54
+00:03:01,001 --> 00:03:04,115
+把这个想法推广到游戏里的每一个对象
+Apply that idea to every object in a game,
+
+55
+00:03:04,115 --> 00:03:06,451
+就是下一期的主角：ECS
+and you get the star of the next episode: ECS.
+
+56
+00:03:07,351 --> 00:03:11,070
+下一期：从《守望先锋》到《僵尸世界大战》
+Next time: from Overwatch to World War Z.
+
+57
+00:03:11,330 --> 00:03:14,013
+而这一切，还得从一条鱼说起
+And all of it starts, once again, with a single fish.

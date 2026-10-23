@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../core/film.css">
+<script type="importmap">{ "imports": { "three": "../lib/three.module.js" } }</script></head>
+<body class="render"><div id="stage"><canvas id="gl" width="1920" height="1080"></canvas></div>
+<script type="module">
+// Look-dev page: renderFrame(t) shows one of several test setups chosen by window.LAB
+import * as THREE from 'three';
+import { GpuFlock } from '../core/sims/gpuflock.js';
+import { makeSchool, makeSolo, seaUniforms } from './sims/fish.js';
+import { makeSea } from './sea.js';
+try {
+  const r = new THREE.WebGLRenderer({ canvas: document.querySelector('#gl'), antialias: true, preserveDrawingBuffer: true });
+  r.setPixelRatio(1); r.setSize(1920, 1080, false);
+  const sea = seaUniforms(), scene = new THREE.Scene();
+  scene.add(makeSea(sea));
+  const cam = new THREE.PerspectiveCamera(40, 16 / 9, 0.05, 6000);
+  const kinds = ['jack', 'sardine', 'fusilier', 'tang', 'sergeant', 'snapper', 'parrot', 'shark'];
+  const solos = kinds.map((k, i) => { const m = makeSolo(k, sea); scene.add(m); return m; });
+  const jack = new GpuFlock(r, { tex: 64, G: 40, L: 80, seed: 5, spread: 0.35, phaseBase: 4, phaseK: 2.6,
+    center: t => [0, 14, 0], radii: [9, 13, 9], init: () => ({ p: [0, 14, 0], spread: [10, 12, 10], v: [2, 0, 0] }),
+    params: () => ({ maxS: 3.4, minS: 2.0, maxF: 5, rho0: 70, swirl: 1.4, wb: 1.4, noiseW: 0.6, flatten: 0.3 }) });
+  const school = makeSchool('jack', jack, sea); scene.add(school);
+  window.DURATION = 10;
+  window.renderFrame = async t => {
+    const L = (new URLSearchParams(location.search).get('lab') || 'solos').split('?')[0];
+    sea.uTime.value = t;
+    solos.forEach(s => s.visible = L === 'solos'); school.visible = L === 'school';
+    if (L === 'solos') {
+      solos.forEach((s, i) => { const u = s.material.uniforms; const big = kinds[i] === 'shark';
+        u.soloPos.value.set(((i % 4) - 1.5) * 2.2, 6 + (i < 4 ? 1.2 : -0.6) + (big ? -0.6 : 0), 0); u.soloFwd.value.set(1, 0, 0.0); u.size.value = big ? 0.9 : 0.8; u.soloPhase.value = t * 9; });
+      cam.position.set(0, 6.6, 9.5); cam.lookAt(0, 6.3, 0);
+    } else {
+      jack.advanceTo((20 + t) * 60);
+      cam.position.set(30, 8, 30); cam.lookAt(0, 13, 0);
+    }
+    r.setRenderTarget(null); r.render(scene, cam); return true;
+  };
+  window.READY = true;
+} catch (e) { window.ERR = e.message + e.stack; window.READY = true; }
+</script></body></html>

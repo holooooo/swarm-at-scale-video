@@ -1,0 +1,219 @@
+1
+00:00:00,900 --> 00:00:03,298
+一把剑，悬在她的指尖前
+One sword hovers at her fingertips.
+
+2
+00:00:04,958 --> 00:00:08,522
+剑诀一起，第二把、第一百把
+She forms the seal, and a second, a hundredth,
+
+3
+00:00:08,522 --> 00:00:11,863
+第一万把，从云海里升起来
+a ten-thousandth sword rise out of the clouds.
+
+4
+00:00:13,123 --> 00:00:17,350
+一万把剑，每一把都要飞、要躲、要出手
+Ten thousand swords, and every one has to fly, dodge and strike.
+
+5
+00:00:17,350 --> 00:00:19,161
+游戏要怎么算？
+How does a game compute that?
+
+6
+00:00:20,861 --> 00:00:25,637
+终章，我们把前四期的招式，合成一套御剑术
+For the finale, we combine the moves of the last four episodes into one art of sword flight.
+
+7
+00:00:27,737 --> 00:00:30,740
+剑群的飞行，就是第一期的鸟群算法
+The swords fly with the flocking algorithm from episode one.
+
+8
+00:00:31,300 --> 00:00:33,834
+每把剑只看身边最近的几把
+Each sword looks only at its nearest few:
+
+9
+00:00:33,834 --> 00:00:36,536
+太近就分开，方向和同伴对齐
+too close, move apart; match your neighbours' heading;
+
+10
+00:00:36,536 --> 00:00:38,901
+再加一股绕着她旋转的力
+and add one more force that circles around her.
+
+11
+00:00:39,561 --> 00:00:43,537
+三条局部规则，就转出了一道升天的剑旋风
+Three local rules spin up a whirlwind of swords.
+
+12
+00:00:43,537 --> 00:00:46,610
+找邻居，用的还是那张空间网格
+Neighbours are still found with the same spatial grid.
+
+13
+00:00:48,110 --> 00:00:50,813
+敌人来了：六千把赤红飞剑
+Then the enemy arrives: six thousand crimson swords.
+
+14
+00:00:51,873 --> 00:00:54,482
+每把剑都是一个实体
+Every sword is an entity:
+
+15
+00:00:54,482 --> 00:00:58,179
+位置、速度、角色、目标、弯曲
+position, velocity, role, target, bend,
+
+16
+00:00:58,179 --> 00:01:00,136
+各存一列数组
+each stored as its own array column.
+
+17
+00:01:00,696 --> 00:01:02,590
+角色系统分配任务
+A role system hands out jobs:
+
+18
+00:01:02,590 --> 00:01:05,861
+有的直取敌人本体，有的去截击来剑
+some go straight for the enemy, some intercept incoming swords,
+
+19
+00:01:05,861 --> 00:01:08,272
+剩下的在她身前结成剑盾
+and the rest form a shield in front of her.
+
+20
+00:01:08,832 --> 00:01:11,773
+每一帧，系统挨个扫过这些数组
+Each frame, the systems sweep through those arrays one by one.
+
+21
+00:01:13,073 --> 00:01:17,097
+两把剑相撞时，碰撞系统算出撞击的方向和力度
+When two swords collide, the collision system works out the direction and force of the hit
+
+22
+00:01:17,097 --> 00:01:18,606
+写进弯曲组件
+and writes them into the bend component.
+
+23
+00:01:19,266 --> 00:01:22,090
+真正把剑压弯的是顶点着色器
+The bending itself happens in the vertex shader:
+
+24
+00:01:22,090 --> 00:01:24,208
+越靠近剑尖弯得越多
+the closer to the tip, the more it bends,
+
+25
+00:01:24,208 --> 00:01:27,914
+再叠一段衰减的正弦，就是撞击后的颤动
+and a decaying sine wave on top is the ringing after the hit.
+
+26
+00:01:28,474 --> 00:01:32,223
+和第二期《ABZÛ》让鱼身摆动，是同一招
+It's the same trick ABZÛ uses to make a fish's body swim, from episode two.
+
+27
+00:01:33,723 --> 00:01:38,277
+一万六千把剑，CPU 每帧只上传位置、方向和弯曲
+Sixteen thousand swords: each frame the CPU uploads only position, direction and bend,
+
+28
+00:01:38,277 --> 00:01:40,132
+每把六十四个字节
+sixty-four bytes per sword.
+
+29
+00:01:40,692 --> 00:01:42,895
+剑尖朝哪、剑身怎么转
+Which way the tip points and how the blade turns
+
+30
+00:01:42,895 --> 00:01:44,929
+交给顶点着色器去算
+are left to the vertex shader.
+
+31
+00:01:45,489 --> 00:01:49,600
+所有剑一次绘制，剑光和火花各再加一次
+All the swords take one draw call, plus one each for the trails and the sparks.
+
+32
+00:01:50,900 --> 00:01:51,978
+她剑诀前推
+She drives the seal forward.
+
+33
+00:01:53,638 --> 00:01:56,747
+一万把剑同时转向，汇成一条剑河
+Ten thousand swords turn at once, merging into a river of blades
+
+34
+00:01:56,747 --> 00:01:58,820
+击碎对方的护体剑气
+that shatters the enemy's guarding aura.
+
+35
+00:01:59,880 --> 00:02:02,755
+被打弯的红剑，一把把坠进云海
+The bent red swords drop, one by one, into the sea of clouds.
+
+36
+00:02:04,655 --> 00:02:05,274
+收剑
+Sheathe.
+
+37
+00:02:07,134 --> 00:02:09,322
+弯掉的剑在归途上慢慢回直
+On the way back, the bent swords slowly straighten,
+
+38
+00:02:09,322 --> 00:02:11,511
+每一把都回到它出发的位置
+and each one returns to exactly where it set out.
+
+39
+00:02:13,211 --> 00:02:16,336
+五期下来：局部规则、空间网格
+Five episodes: local rules, a spatial grid,
+
+40
+00:02:16,336 --> 00:02:19,829
+实例化和顶点动画、数据和逻辑分开
+instancing and vertex animation, data kept apart from logic,
+
+41
+00:02:19,829 --> 00:02:22,402
+再把能算的交给 GPU
+and everything computable handed to the GPU.
+
+42
+00:02:23,062 --> 00:02:28,268
+一只鸟、一条鱼、一个僵尸、一块板、一把剑
+A bird, a fish, a zombie, a panel, a sword:
+
+43
+00:02:28,268 --> 00:02:32,116
+变成一万个，用的是同一套办法
+turning one into ten thousand takes the same set of moves.
+
+44
+00:02:33,176 --> 00:02:35,974
+而这一切，都从一把剑开始
+And all of it begins with a single sword.

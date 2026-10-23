@@ -1,0 +1,126 @@
+[
+ {
+  "id": "intro",
+  "lines": [
+   [
+    "一块太阳能板，只需要做一件事：|一整天都转过去，正对着太阳。",
+    "A solar panel has only one job:|turn all day long to face the sun."
+   ],
+   [
+    "可在《戴森球计划》里，|一颗星球上铺满了成千上万块，|恒星周围还飞着几十万张太阳帆。",
+    "But in Dyson Sphere Program,|a single planet is paved with thousands of them,|and hundreds of thousands of sails circle the star."
+   ],
+   [
+    "每一块都在转。这么多东西，|游戏到底每一帧要算多少？",
+    "Every one of them is turning.|How much does the game have to compute each frame?"
+   ]
+  ]
+ },
+ {
+  "id": "title",
+  "lines": [
+   [
+    "这一期，我们看怎么让一百万个东西，一起追着太阳转。",
+    "This episode: how to make a million things track the sun at once."
+   ]
+  ]
+ },
+ {
+  "id": "cpu",
+  "lines": [
+   [
+    "最直接的写法：每块板每帧在 CPU 上，|先找到太阳，转动底座，再把面板仰起来，|算出一个 4×4 矩阵，传给显卡。",
+    "The direct way: every panel, every frame, on the CPU:|find the sun, turn the base, tilt the face up,|build a 4×4 matrix and hand it to the GPU."
+   ],
+   [
+    "我在这台电脑上测了一下：|一百万块板，光算矩阵就要 46 毫秒，|每帧还得上传 61 MB 数据。",
+    "I measured it on this machine:|for a million panels the matrices alone take 46 milliseconds,|and 61 megabytes have to be uploaded every frame."
+   ],
+   [
+    "可这些板的变化，其实全都能从太阳位置推出来。",
+    "Yet everything about how these panels change follows from where the sun is."
+   ]
+  ]
+ },
+ {
+  "id": "gpu",
+  "lines": [
+   [
+    "那就把这段数学，搬进顶点着色器。",
+    "So move that math into the vertex shader."
+   ],
+   [
+    "每块板只存一次：它在星球上的方向，加一个随机数，16 个字节，|开局上传，之后再也不动。",
+    "Each panel is stored once: its direction on the planet plus a random number, sixteen bytes,|uploaded at the start and never touched again."
+   ],
+   [
+    "每一帧，CPU 只发两个数：星球转到了哪，太阳在哪。|顶点着色器自己转底座、仰面板。",
+    "Each frame, the CPU sends just two values: how far the planet has turned, and where the sun is.|The vertex shader turns the base and tilts the face on its own."
+   ],
+   [
+    "转到夜晚的一侧，太阳落下地平线，|板子就平放下来，等下一次日出。",
+    "On the night side, once the sun sets below the horizon,|the panels lie flat and wait for the next sunrise."
+   ]
+  ]
+ },
+ {
+  "id": "swarm",
+  "lines": [
+   [
+    "太空里的太阳帆更极端：几十万张，每一张都在绕着恒星转。",
+    "Out in space, the solar sails go further: hundreds of thousands, each orbiting the star."
+   ],
+   [
+    "它们甚至什么都不用存。|只用编号算出哈希，就能定出轨道、半径和起始角，|再按开普勒定律，越靠里的转得越快。",
+    "They don't need to store anything at all.|A hash of each sail's index fixes its orbit, radius and starting angle,|and by Kepler's law, inner orbits run faster."
+   ],
+   [
+    "位置就是编号和时间的函数。|这里的一百零四万八千五百七十六张帆，只用一次绘制。",
+    "Position is just a function of index and time.|These one million forty-eight thousand five hundred seventy-six sails take a single draw call."
+   ],
+   [
+    "据社区 Mod 作者的分析，|《戴森球计划》也是用一次程序化绘制，|画出所有远处的太阳帆。",
+    "According to a community mod author's analysis,|Dyson Sphere Program also draws all the distant sails|with one procedural draw call."
+   ]
+  ]
+ },
+ {
+  "id": "shell",
+  "lines": [
+   [
+    "戴森壳的六边形也是一样。|社区 Mod SphereOpt 把它们改成实例化，|每层一次绘制，而不是每块壳一次。",
+    "The hexagons of the Dyson shell work the same way.|The community mod SphereOpt switched them to instancing:|one draw call per layer instead of one per shell."
+   ],
+   [
+    "在一颗有 5240 块壳的戴森球上，|作者测到帧率从 18 提到了 85 左右。",
+    "On a sphere with 5,240 shells,|its author measured the frame rate going from 18 to about 85."
+   ]
+  ]
+ },
+ {
+  "id": "lod",
+  "lines": [
+   [
+    "还有一招是不画、少画。|离得近的太阳帆，游戏画成实心模型；|远处的，只是一张平面贴片。",
+    "Another move is to draw less, or nothing.|Sails up close are drawn as solid meshes;|far away, they're just flat sprites."
+   ],
+   [
+    "SphereOpt 也给框架和节点加了细节层级和视锥剔除：|戴森球不在画面里时，帧率大幅上升。",
+    "SphereOpt also added level of detail and frustum culling for frames and nodes:|when the sphere is out of view, the frame rate jumps."
+   ]
+  ]
+ },
+ {
+  "id": "bridge",
+  "lines": [
+   [
+    "四期下来，招式其实只有几种：|局部规则、空间网格、数据和逻辑分开，|再把能算的都交给 GPU。",
+    "Four episodes in, there are really only a few moves:|local rules, a spatial grid, data kept apart from logic,|and everything computable handed to the GPU."
+   ],
+   [
+    "下一期，我们把它们合在一起。",
+    "Next time, we put them all together."
+   ]
+  ]
+ }
+]

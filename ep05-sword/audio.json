@@ -1,0 +1,6 @@
+{"bpm": 70, "prog": "dmin", "seed": 2025,
+ "bed": [{"at": "intro", "type": "wind"}],
+ "quiet": [],
+ "swell": [],
+ "chapters": ["flock", "ecs", "bend", "gpu"],
+ "whooshAt": [["intro:1", 0.55, 10], ["climax:1", 0.3, 6], ["recall:1", 0.6, 6]]}

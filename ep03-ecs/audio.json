@@ -1,0 +1,6 @@
+{"bpm": 84, "prog": "dmin", "seed": 2019,
+ "bed": [{"at": "intro", "type": "wind"}],
+ "quiet": ["oop", "owA", "ow", "soa"],
+ "swell": [["intro:2", "title", 1.0]],
+ "chapters": ["oop", "ow", "soa", "flow", "pile"],
+ "whooshAt": []}

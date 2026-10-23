@@ -1,0 +1,6 @@
+{"bpm": 70, "prog": "fmaj", "seed": 2017,
+ "bed": [{"at": "intro", "type": "sea"}],
+ "quiet": ["skel", "inst", "swim", "phase", "bite", "curl"],
+ "swell": [["intro:1", "title", 0.8]],
+ "chapters": ["skel", "inst", "swim", "phase", "bite", "curl"],
+ "whooshAt": []}

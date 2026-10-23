@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../core/film.css">
+<script type="importmap">{ "imports": { "three": "../lib/three.module.js" } }</script></head>
+<body class="render"><div id="stage"><canvas id="gl" width="1920" height="1080"></canvas></div>
+<script type="module">
+import * as THREE from 'three';
+import { Horde } from './sims/ecs.js';
+import { HordeView, fogUniforms } from './sims/zombie.js';
+import { makeCity, makeFlowLayer } from './city.js';
+try {
+  const r = new THREE.WebGLRenderer({ canvas: document.querySelector('#gl'), antialias: true, preserveDrawingBuffer: true });
+  r.setPixelRatio(1); r.setSize(1920, 1080, false);
+  const fog = fogUniforms(), scene = new THREE.Scene(); scene.add(makeCity(fog));
+  const h = new Horde(8192), view = new HordeView(h, fog); scene.add(view.mesh);
+  const cam = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 5000);
+  const q = new URLSearchParams(location.search), L = q.get('lab') || 'wide';
+  window.DURATION = 10;
+  window.renderFrame = async t => {
+    h.advanceTo((60 + t) * 60); view.sync();
+    if (L === 'wide') { cam.position.set(34, 9, 18); cam.lookAt(2, 5, 0); }
+    else if (L === 'top') { cam.position.set(60, 90, 0.01); cam.lookAt(60, 0, 0); }
+    else { cam.position.set(9, 3, 6); cam.lookAt(0, 6, 0); }
+    r.render(scene, cam); return true;
+  };
+  window.READY = true;
+} catch (e) { window.ERR = e.message + e.stack; window.READY = true; }
+</script></body></html>

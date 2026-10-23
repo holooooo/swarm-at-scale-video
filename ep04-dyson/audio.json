@@ -1,0 +1,6 @@
+{"bpm": 66, "prog": "amin", "seed": 2021,
+ "bed": [{"at": "intro", "type": "none"}],
+ "quiet": [],
+ "swell": [],
+ "chapters": ["cpu", "gpu", "swarm", "shell", "lod"],
+ "whooshAt": []}

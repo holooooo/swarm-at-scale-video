@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../core/film.css">
+<script type="importmap">{ "imports": { "three": "../lib/three.module.js", "three/addons/": "../lib/jsm/" } }</script></head>
+<body class="render"><div id="stage"><canvas id="gl" width="1920" height="1080"></canvas></div>
+<script type="module">
+// look-dev page: ?lab=close|wide|hand|front|battle&t=SECONDS (the time can also be passed to renderFrame)
+import * as THREE from 'three';
+import { buildWorld, updateWorld } from './sims/scene.js';
+try {
+  const r = new THREE.WebGLRenderer({ canvas: document.querySelector('#gl'), antialias: true, preserveDrawingBuffer: true });
+  r.setPixelRatio(1); r.setSize(1920, 1080, false); r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.0;
+  const W = await buildWorld(180.557), cam = new THREE.PerspectiveCamera(40, 16 / 9, 0.02, 12000);
+  const Q = new URLSearchParams(location.search), L = Q.get('lab') || 'close';
+  window.W = W; window.DURATION = 200;
+  window.renderFrame = async t => {
+    const info = updateWorld(W, t, { roleTint: +(Q.get('tint') || 0) });
+    const V = (x, y, z) => new THREE.Vector3(x, y, z);
+    const C = { close: [V(-0.55, 1.45, 1.25), V(-0.1, 1.33, 0.2), 32], hand: [V(-0.42, 1.38, 0.62), V(-0.08, 1.33, 0.26), 30], front: [V(0.3, 1.2, 4.2), V(0, 0.95, 0), 35],
+      wide: [V(30, 12, -60), V(0, 18, 10), 50], battle: [V(-14, 22, -16), V(0, 10, 40), 55], back: [V(0.6, 1.5, -2.6), V(0, 1.2, 4), 45], him: [V(4, 15, 66), V(0, 13, 78), 35] }[L];
+    cam.position.copy(C[0]); cam.lookAt(C[1]); cam.fov = C[2]; cam.updateProjectionMatrix();
+    r.render(W.scene, cam); window.INFO = info; return true;
+  };
+  window.READY = true;
+} catch (e) { window.ERR = e.message + e.stack; console.error(e); window.READY = true; }
+</script></body></html>

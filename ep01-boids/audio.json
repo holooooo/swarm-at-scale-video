@@ -1,0 +1,6 @@
+{"bpm": 76, "prog": "dmaj", "seed": 1987,
+ "bed": [{"at": "intro", "type": "wind"}, {"at": "bridge:1", "type": "sea", "fade": 2.6}, {"at": "final:1", "type": "wind", "fade": 2.2, "offset": -0.8}],
+ "quiet": ["rules", "scale", "topo:1"],
+ "swell": [["intro:1", "intro:2", 1.2]],
+ "chapters": ["rules", "steer", "scale", "topo", "gpu"],
+ "whooshAt": [["steer:2", 4.5, 3]]}

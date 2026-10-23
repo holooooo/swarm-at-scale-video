@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>万象成群 · EP04 戴森球计划 万板向日</title>
+<link rel="stylesheet" href="../core/film.css">
+<script type="importmap">{ "imports": { "three": "../lib/three.module.js", "three/addons/": "../lib/jsm/" } }</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <img id="foot" class="layer" alt="">
+  <canvas id="c2d" width="1920" height="1080"></canvas>
+  <div id="frame"><img alt=""></div>
+  <div id="labels"></div>
+  <div id="cards"></div>
+  <div id="wipe"><div class="ln"></div><div class="lab glass l"><small>AFTER · 之后</small><span></span></div><div class="lab glass r"><small>BEFORE · 之前</small><span></span></div></div>
+  <div id="brand"><div class="logo">群</div><div><div class="t1"></div><div class="t2"></div></div></div>
+  <div id="chip" class="glass"><span class="dot"></span><span class="zh"></span><span class="en"></span></div>
+  <div id="params" class="glass hide"><h4><span>LIVE</span><b>● REC</b></h4><div id="prows"></div></div>
+  <div id="credit" class="glass hide"></div>
+  <div id="title"><div class="k"></div><div class="h"></div><div class="e"></div><div class="tags"></div></div>
+  <div id="panel" class="glass">
+    <div id="phead"><div id="pstep"></div><div id="ptitle"><div class="zh"></div><div class="en"></div></div></div>
+    <div id="pdots"></div>
+    <div id="pdesc"></div>
+    <div id="code"><div class="tab"><span class="c" style="background:#ff5f57"></span><span class="c" style="background:#febc2e"></span><span class="c" style="background:#28c840"></span><span class="fn"></span><span class="ln"></span></div><pre></pre></div>
+  </div>
+  <div id="subs"><div class="zh"></div><div class="en"></div></div>
+  <div id="prog"><div class="f"></div></div>
+  <div id="fade" class="layer" style="background:#000;opacity:0;pointer-events:none"></div>
+</div>
+<script src="timeline.js"></script>
+<script type="module">
+  import { boot } from '../core/film.js';
+  import story from './story.js';
+  boot(story).catch(e => { console.error('BOOT ' + e.message + '\n' + e.stack); window.ERR = e.message; window.READY = true; });
+</script>
+</body></html>
