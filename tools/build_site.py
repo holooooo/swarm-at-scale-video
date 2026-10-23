@@ -19,6 +19,15 @@ for name in ('core', 'lib', 'assets', 'interactive'):
     files += [p for p in (ROOT / name).rglob('*') if p.is_file() and not p.name.startswith('.')]
 for ep in sorted(ROOT.glob('ep[0-9][0-9]-*')):
     files += [p for p in ep.rglob('*') if p.is_file() and p.suffix.lower() in {'.js', '.mjs', '.json', '.html', '.css', '.glb', '.jpg', '.jpeg', '.png', '.webp', '.m4a'} and 'blender' not in p.parts and not p.name.startswith('.')]
+# pathlib.rglob does not descend into symlinked directories. Expand only links
+# resolving inside this project so cross-episode footage remains deployable.
+for ep in sorted(ROOT.glob('ep[0-9][0-9]-*')):
+    for link in ep.rglob('*'):
+        if link.is_symlink() and link.is_dir():
+            resolved = link.resolve()
+            if ROOT not in resolved.parents:
+                raise SystemExit(f'External runtime link is not allowed: {link}')
+            files += [link / p.relative_to(resolved) for p in resolved.rglob('*') if p.is_file()]
 files += list((ROOT / 'out').glob('*.srt'))
 for p in files:
     rel = p.relative_to(ROOT)
