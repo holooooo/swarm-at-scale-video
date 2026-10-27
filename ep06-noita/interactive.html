@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>像素炼金术 · Noita 灵感实验｜万象成群</title>
+<meta name="description" content="倒沙、注水、点火。亲手试一试简单的像素规则，如何在洞穴里引发连锁反应。">
+<link rel="icon" href="../assets/icon.svg"><link rel="stylesheet" href="interactive.css">
+</head>
+<body>
+<header class="nav"><a class="brand" href="../index.html"><span>群</span> 万象成群</a><nav aria-label="主导航"><a href="../index.html#experiments">全部实验</a><a href="film.html">讲解回放 ↗</a></nav></header>
+<main>
+<section class="experiment" aria-labelledby="title">
+<div class="heading"><div><p class="eyebrow">06 / NOITA INSPIRED</p><h1 id="title">像素炼金术<span>一粒沙，也有自己的规则。</span></h1></div><span class="live" id="state" role="status">正在准备实验</span></div>
+<div class="viewport" id="viewport"><canvas id="scene" width="1280" height="720" tabindex="0" aria-label="像素物理画布。按住拖动绘制选中材料；空格暂停，句号单步，数字一到六切换材料。"></canvas><div class="canvas-note"><span id="scene-label">洞穴连锁反应</span><span id="cursor-info">按住拖动，把材料放进洞穴</span></div><div id="message" role="alert" hidden></div></div>
+<div class="transport"><div class="transport-buttons"><button id="pause" type="button">暂停</button><button id="step" type="button" disabled>单步</button><button id="reset" type="button">重置场景</button></div><div class="speed"><label for="speed">速度</label><select id="speed"><option value="0.25">¼ 倍</option><option value="0.5">½ 倍</option><option value="1" selected>1 倍</option><option value="2">2 倍</option></select></div></div>
+<div class="readout" aria-label="实时模拟数据"><span>模拟步 <b id="ticks">0</b></span><span>活跃分块 <b id="active">—</b></span><span>本步检查 <b id="visited">—</b></span><span id="performance">等待模拟</span></div>
+<p class="source">灵感来自 Petri Purho 的 GDC 分享 <a href="https://www.gdcvault.com/play/1025695/" target="_blank" rel="noopener">Exploring the Tech and Design of Noita ↗</a>。这里运行的是自制教学模拟。</p>
+</section>
+<aside class="controls" aria-label="实验控制">
+<div class="control-section"><p class="eyebrow">先放进一点东西</p><h2>选择材料</h2><div class="materials" id="materials" role="group" aria-label="画笔材料"></div><p class="material-description" id="material-description"></p><label class="brush-label" for="brush">画笔半径 <output id="brush-value" for="brush">4 格</output></label><input id="brush" type="range" min="1" max="14" value="4" step="1"></div>
+<div class="control-section"><label class="section-label" for="preset">换一个实验</label><select id="preset"><option value="hero">洞穴 · 连锁反应</option><option value="sand">沙子 · 向下找空位</option><option value="water">水与油 · 密度分层</option><option value="fire">燃烧 · 反应与熄灭</option><option value="chunks">分块 · 只更新变化的地方</option><option value="empty">空白 · 自由实验</option></select><p id="preset-description" class="hint"></p><button id="clear" class="quiet" type="button">清空，重新配方</button></div>
+<div class="control-section"><label class="toggle"><input id="debug" type="checkbox"><span>显示活跃分块</span></label><p class="hint">亮框是本步更新的区域。静止的材料会休眠；画一笔，就能把附近唤醒。</p><label class="toggle"><input id="grid" type="checkbox"><span>显示像素网格</span></label></div>
+<div class="instructions"><h2>试一试</h2><p>让沙落进水里，把油铺在水面，再放一粒火星。</p><p>按住拖动绘制 · 右键擦除<br>空格暂停 · 句号单步<br>数字 1–6 换材料</p><a href="film.html">看这些规则如何工作 →</a></div>
+</aside>
+</main>
+<script type="module" src="interactive.js"></script>
+</body></html>

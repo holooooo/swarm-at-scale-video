@@ -1,0 +1,48 @@
+/* Noita: dark rock, warm sand, cyan water. Fixed film coordinates; no wall-clock animation. */
+:root { --glass:rgba(10,15,20,.93); --line:rgba(167,192,205,.16); --amber:#f0c16b; --cyan:#57d9e8; --dim:#94aab4; }
+#stage { background:#070c10; }
+#gl { visibility:hidden; }
+#c2d { image-rendering:pixelated; }
+.glass { border-radius:5px; box-shadow:0 12px 48px #0005; backdrop-filter:none; -webkit-backdrop-filter:none; }
+#brand { left:48px; top:36px; }
+#brand .logo { border-radius:3px; background:#d9af69; color:#101716; box-shadow:none; }
+#brand .t1 { font-size:20px; letter-spacing:2px; }
+#brand .t2 { font-size:11px; letter-spacing:2.4px; }
+#chip { left:48px; top:104px; border-radius:3px; font-size:13px; padding:7px 10px; }
+#chip .dot { width:5px; height:5px; box-shadow:none; background:var(--amber); border-radius:0; }
+#chip .en { font:11px var(--mono); letter-spacing:1px; }
+#panel { left:1144px; top:216px; bottom:auto; width:728px; padding:22px; }
+#phead { gap:13px; }
+#pstep { border-radius:2px; font-size:13px; padding:7px 9px; }
+#ptitle .zh { font-size:28px; letter-spacing:1px; }
+#ptitle .en { font:12px var(--mono); letter-spacing:1px; margin-top:7px; }
+#pdots { margin-top:20px; }
+#pdots i { height:2px; border-radius:0; }
+#pdesc { margin-top:15px; font-size:18px; line-height:1.55; }
+#pdesc .en { font-size:13px; line-height:1.55; }
+#code { border-radius:2px; margin-top:20px; background:#060b10; }
+#code .tab { font-size:11px; padding:10px; gap:5px; }
+#code .tab .c { width:6px; height:6px; border-radius:1px; opacity:.75; }
+#code .tab .fn { margin-left:5px; }
+#code pre { padding-top:13px; padding-bottom:15px; line-height:19px !important; }
+#code .row .n { width:35px; padding-right:9px; }
+#params { top:98px; left:1144px; right:auto; width:728px; padding:10px 20px 8px; }
+#params h4 { font-size:10px; margin-bottom:4px; }
+#params h4 b { color:#78d8b0; }
+.prow { font-size:12px; padding:3px 0; }
+#credit { top:38px; right:48px; max-width:1050px; background:#0a0e12c9; font-size:12px; padding:9px 12px; }
+#credit b { font-size:10px; }
+#subs, #subs.full { left:48px; right:48px; bottom:41px; min-height:96px; padding-top:6px; }
+#subs .zh { font-size:36px; line-height:1.35; padding:4px 16px; letter-spacing:.5px; }
+#subs .en { font-size:22px; max-width:1650px; margin:3px auto 0; line-height:1.4; }
+#subs.box .zh, #subs.box .en { background:rgba(4,9,13,.82); border-radius:3px; }
+#title { text-align:left; padding-left:64px; }
+#title .k { font-size:13px; letter-spacing:4px; }
+#title .h { margin-top:10px; letter-spacing:4px; }
+#title .e { font-size:22px; letter-spacing:3px; }
+#title .tags { justify-content:flex-start; }
+#prog { height:3px; }
+#prog .f { background:#cfad71; }
+.lab2 { border-radius:2px; font-size:16px; }
+.lab2 small { font:11px var(--mono); }
+.card { border-radius:3px; }

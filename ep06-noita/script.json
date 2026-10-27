@@ -1,0 +1,36 @@
+[
+  {"id":"intro","lines":[
+    ["看这粒火星。|碰到油，整座洞穴就出事了。","Watch this spark.|It touches oil, and the cave is in trouble."],
+    ["这团混乱，不是一段播好的动画。|沙、水、火，都在现场按规则变化。","This chaos is not a prerecorded animation.|Sand, water and fire are changing under local rules."],
+    ["这一期，拆开《Noita》的像素魔法。","This episode, we unpack the pixel magic of Noita."]
+  ]},
+  {"id":"grid","lines":[
+    ["先把洞穴放大。|一个格子，存一种材料。","First, zoom into the cave.|Each cell stores a material."],
+    ["画面每前进一步，|材料就检查身边的格子，再决定移动或反应。","At each simulation step,|materials inspect nearby cells, then move or react."],
+    ["这里是教学重演，|不是游戏源码，也不代表原版性能。","This is an educational reconstruction,|not the game's source code or a measure of its performance."]
+  ]},
+  {"id":"sand","lines":[
+    ["先只倒沙。|下面空着，就往下掉。","Start with sand alone.|If the cell below is empty, fall into it."],
+    ["正下方堵住，再试两条斜路。|都走不通，就停下来。","If blocked below, try the two diagonals.|If neither works, stay put."],
+    ["没有人画沙堆的轮廓。|一粒粒沙重复这条规则，坡就长出来了。","Nobody draws the outline of the pile.|Grains repeat the same rule, and a slope emerges."]
+  ]},
+  {"id":"water","lines":[
+    ["换成水，多给它一条路：|落不下去，还能往两边流。","Water gets another option:|when it cannot fall, it can spread sideways."],
+    ["看它绕过石头，灌进低处。|沙沉进水里，油浮在水上。","Watch it flow around rock and into low ground.|Sand sinks through water; oil stays above it."],
+    ["材料不必认识整座洞穴。|眼前几个邻居，就能改变大场面。","A material need not know the whole cave.|A few nearby cells can reshape the scene."]
+  ]},
+  {"id":"fire","lines":[
+    ["现在，把火放进来。|火碰到油和木头，会点燃邻居。","Now add fire.|Touching oil or wood can ignite a neighboring cell."],
+    ["燃料被消耗，烟往上飘。|一处接触，变成一串连锁反应。","Fuel is consumed and smoke rises.|One contact becomes a chain reaction."],
+    ["意外就藏在这里：|规则很短，碰在一起的结果却很难预料。","This is where accidents begin:|short rules combine into outcomes that are hard to predict."]
+  ]},
+  {"id":"chunks","lines":[
+    ["可洞穴这么大，每次都扫一遍？|大部分石头，明明根本没动。","But must every step scan the entire cave?|Most of that rock has not moved at all."],
+    ["把世界切成块。|发生变化的区域亮起来，安静的区域先休息。","Divide the world into chunks.|Changing regions light up; quiet regions can sleep."],
+    ["移动和反应，会唤醒附近的块。|右边显示的，是这次演示实际访问的格子数。","Movement and reactions wake nearby chunks.|The readout shows cells actually visited in this reconstruction."]
+  ]},
+  {"id":"final","lines":[
+    ["拉回洞穴。|现在你看到的，是无数条小规则正在相遇。","Pull back to the cave.|You are watching countless small rules meet."],
+    ["而下一场事故，|也许只差一粒火星。","And the next accident|may be just one spark away."]
+  ]}
+]

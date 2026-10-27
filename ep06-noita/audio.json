@@ -1,0 +1,10 @@
+{
+  "bpm": 68,
+  "prog": "dmin",
+  "seed": 2019,
+  "bed": [{"at":"intro","type":"wind"}],
+  "quiet": ["grid","sand","water","fire","chunks"],
+  "swell": [["intro:0","grid",0.5],["final","final:end",0.25]],
+  "chapters": ["grid","sand","water","fire","chunks"],
+  "whooshAt": []
+}

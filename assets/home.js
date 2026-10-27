@@ -4,7 +4,8 @@ const episodes = [
  ['ep02-abzu','ABZÛ','一万条鱼，没有一根骨头','鱼身的游动写在顶点里。看看同一张静态网格，怎样在海中变得生动。','实例化 · 顶点动画 · 鱼群','02_ABZU_一万条鱼没有一根骨头'],
  ['ep03-ecs','ECS','一万个敌人，怎么更新？','把数据与逻辑拆开，让系统扫过整列数组。从街道上空观察尸潮的流动。','数据导向 · 角色系统 · 尸潮','03_ECS_一万个敌人'],
  ['ep04-dyson','DYSON SPHERE','一百万块板，追着太阳转','把朝向和轨道交给着色器。绕着行星看一看，白天追光，夜里平放。','GPU 实例化 · 无状态轨道 · LOD','04_戴森球计划_万板向日'],
- ['ep05-sword','SWORD FLIGHT','把前面的招式，合成御剑术','局部规则负责飞行，ECS 分配攻防，顶点着色器弯曲剑身。五期思路，在剑阵里相遇。','剑群 · 攻防分工 · 着色器弯剑','05_御剑术_一万把飞剑']
+ ['ep05-sword','SWORD FLIGHT','把前面的招式，合成御剑术','局部规则负责飞行，ECS 分配攻防，顶点着色器弯曲剑身。五期思路，在剑阵里相遇。','剑群 · 攻防分工 · 着色器弯剑','05_御剑术_一万把飞剑'],
+ ['ep06-noita','NOITA INSPIRED','一粒火星，整座洞穴','倒沙、注水、点火。局部材料规则怎样引发连锁反应，又怎样让安静的区域休眠。','像素材质 · 密度与燃烧 · 活跃分块','06_Noita_像素炼金术']
 ];
 document.querySelector('#episodes').innerHTML = episodes.map(([path,en,title,desc,tags,file],i)=>{const n=String(i+1).padStart(2,'0');return `<article class="episode"><a class="thumb" href="${path}/interactive.html" aria-label="探索${title}"><img src="assets/ep${n}.jpg" alt="${title}的实时场景画面" loading="lazy" width="960" height="540"></a><div class="episode-body"><span class="number">${n} / ${en}</span><h3>${title}</h3><p>${desc}</p><div class="topics">${tags}</div><div class="actions"><a class="button primary" href="${path}/interactive.html">交互探索 ↗</a><a href="${path}/film.html">讲解回放</a><a href="out/${file}.srt" download>字幕</a></div></div></article>`}).join('');
 const canvas=document.querySelector('#flock'), ctx=canvas.getContext('2d');

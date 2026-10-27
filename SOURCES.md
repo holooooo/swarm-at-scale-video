@@ -56,3 +56,12 @@
 | 一万把 + 六千把剑的模拟每步 2.8–7.8 ms | 本机实测 `ep05-sword/bench.json`（Apple M3 Max，Node 24） |
 | 每把剑每帧上传 4 × vec4 = 64 字节 | `ep05-sword/sims/swordgl.js` 的 `sync()` |
 | ABZÛ 游动着色器（画中画） | Matt Nava, “Creating the Art of ABZÛ”, GDC 2017（与 EP02 同一片段，Bilibili BV15b41157HH 转载） |
+
+## EP06 《Noita》灵感实验：像素炼金术
+
+- 技术灵感：Petri Purho（Nolla Games），GDC 2019，**Exploring the Tech and Design of 'Noita'**。[GDC Vault 条目](https://www.gdcvault.com/play/1025695/)；[公开视频介绍](https://www.gamedeveloper.com/design/video-understanding-the-remarkable-tech-and-design-of-i-noita-i-)。
+- 可读补充：[独立听课笔记](https://master--braindump-jethrokuan.netlify.app/posts/gdc_vault_exploring_the_tech_and_design_of_noita/)。笔记是二手资料；原分享提到的 falling-sand、分块和变化区域是选题背景，不等于本片已复现原游戏实现。
+- 全部洞穴、材料纹理、动画和教学图形均由本项目实时生成，没有使用游戏实机、游戏资产或 GDC 录像，也没有转述未经核对的逐字引语。
+- 本片使用自制的 320×180 元胞材料网格，60 Hz 固定步长，演示沙的下落/斜落、水油的流动/密度置换、木油燃烧、烟上升及分块休眠。它是受演讲启发的教学重演，**不是 Noita 源码，也不代表 Noita 的物理精度、完整机制或性能**。没有实现原作的刚体、完整化学体系、多线程或连续流体求解。
+- 屏幕中的访问格数、活跃分块等读自当前自制模拟，不能当作原游戏的测试结果；分块大小及扫描策略见 `ep06-noita/sims/sandbox.js`。代码面板直接引用该文件中的实际执行片段。
+- 中文解说由现有本地 MamboTTS/曼波音色合成，英文为字幕；配乐与转场声由现有 `tools/build_audio.py` 程序生成，无外部音乐素材。

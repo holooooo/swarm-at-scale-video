@@ -1,0 +1,194 @@
+1
+00:00:00,650 --> 00:00:01,999
+看这粒火星
+Watch this spark.
+
+2
+00:00:01,999 --> 00:00:04,527
+碰到油，整座洞穴就出事了
+It touches oil, and the cave is in trouble.
+
+3
+00:00:05,157 --> 00:00:08,787
+这团混乱，不是一段播好的动画
+This chaos is not a prerecorded animation.
+
+4
+00:00:08,787 --> 00:00:12,631
+沙、水、火，都在现场按规则变化
+Sand, water and fire are changing under local rules.
+
+5
+00:00:12,911 --> 00:00:15,507
+这一期，拆开《Noita》的像素魔法
+This episode, we unpack the pixel magic of Noita.
+
+6
+00:00:16,557 --> 00:00:18,100
+先把洞穴放大
+First, zoom into the cave.
+
+7
+00:00:18,100 --> 00:00:20,329
+一个格子，存一种材料
+Each cell stores a material.
+
+8
+00:00:20,609 --> 00:00:22,225
+画面每前进一步
+At each simulation step,
+
+9
+00:00:22,225 --> 00:00:25,781
+材料就检查身边的格子，再决定移动或反应
+materials inspect nearby cells, then move or react.
+
+10
+00:00:26,061 --> 00:00:27,699
+这里是教学重演
+This is an educational reconstruction,
+
+11
+00:00:27,699 --> 00:00:30,648
+不是游戏源码，也不代表原版性能
+not the game's source code or a measure of its performance.
+
+12
+00:00:31,798 --> 00:00:33,073
+先只倒沙
+Start with sand alone.
+
+13
+00:00:33,073 --> 00:00:35,260
+下面空着，就往下掉
+If the cell below is empty, fall into it.
+
+14
+00:00:35,840 --> 00:00:38,583
+正下方堵住，再试两条斜路
+If blocked below, try the two diagonals.
+
+15
+00:00:38,583 --> 00:00:40,778
+都走不通，就停下来
+If neither works, stay put.
+
+16
+00:00:41,358 --> 00:00:43,266
+没有人画沙堆的轮廓
+Nobody draws the outline of the pile.
+
+17
+00:00:43,266 --> 00:00:46,445
+一粒粒沙重复这条规则，坡就长出来了
+Grains repeat the same rule, and a slope emerges.
+
+18
+00:00:48,095 --> 00:00:50,322
+换成水，多给它一条路
+Water gets another option:
+
+19
+00:00:50,322 --> 00:00:52,721
+落不下去，还能往两边流
+when it cannot fall, it can spread sideways.
+
+20
+00:00:53,251 --> 00:00:55,930
+看它绕过石头，灌进低处
+Watch it flow around rock and into low ground.
+
+21
+00:00:55,930 --> 00:00:58,610
+沙沉进水里，油浮在水上
+Sand sinks through water; oil stays above it.
+
+22
+00:00:58,890 --> 00:01:01,246
+材料不必认识整座洞穴
+A material need not know the whole cave.
+
+23
+00:01:01,246 --> 00:01:04,327
+眼前几个邻居，就能改变大场面
+A few nearby cells can reshape the scene.
+
+24
+00:01:05,777 --> 00:01:07,876
+现在，把火放进来
+Now add fire.
+
+25
+00:01:07,876 --> 00:01:10,930
+火碰到油和木头，会点燃邻居
+Touching oil or wood can ignite a neighboring cell.
+
+26
+00:01:11,560 --> 00:01:13,978
+燃料被消耗，烟往上飘
+Fuel is consumed and smoke rises.
+
+27
+00:01:13,978 --> 00:01:16,954
+一处接触，变成一串连锁反应
+One contact becomes a chain reaction.
+
+28
+00:01:17,234 --> 00:01:18,767
+意外就藏在这里
+This is where accidents begin:
+
+29
+00:01:18,767 --> 00:01:21,834
+规则很短，碰在一起的结果却很难预料
+short rules combine into outcomes that are hard to predict.
+
+30
+00:01:23,484 --> 00:01:26,217
+可洞穴这么大，每次都扫一遍？
+But must every step scan the entire cave?
+
+31
+00:01:26,217 --> 00:01:28,780
+大部分石头，明明根本没动
+Most of that rock has not moved at all.
+
+32
+00:01:29,410 --> 00:01:30,867
+把世界切成块
+Divide the world into chunks.
+
+33
+00:01:30,867 --> 00:01:34,430
+发生变化的区域亮起来，安静的区域先休息
+Changing regions light up; quiet regions can sleep.
+
+34
+00:01:35,010 --> 00:01:37,682
+移动和反应，会唤醒附近的块
+Movement and reactions wake nearby chunks.
+
+35
+00:01:37,682 --> 00:01:41,356
+右边显示的，是这次演示实际访问的格子数
+The readout shows cells actually visited in this reconstruction.
+
+36
+00:01:43,206 --> 00:01:44,366
+拉回洞穴
+Pull back to the cave.
+
+37
+00:01:44,366 --> 00:01:47,846
+现在你看到的，是无数条小规则正在相遇
+You are watching countless small rules meet.
+
+38
+00:01:48,626 --> 00:01:49,886
+而下一场事故
+And the next accident
+
+39
+00:01:49,886 --> 00:01:51,427
+也许只差一粒火星
+may be just one spark away.
